@@ -1,0 +1,114 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+ 
+class Barang {
+    String nama;
+    int harga;
+ 
+    public Barang(String nama, int harga) {
+        this.nama = nama;
+        this.harga = harga;
+    }
+ 
+    public String getNama() {
+        return nama;
+    }
+ 
+    public int getHarga() {
+        return harga;
+    }
+}
+ 
+class Pembelian {
+    ArrayList<Barang> daftarBarang = new ArrayList<>();
+    ArrayList<Barang> ArrayUntukMetod = new ArrayList<>();
+ 
+    public void menambahkanBarang(Barang barang) {
+        daftarBarang.add(barang);
+        System.out.println("Barang ditambahkan: " + barang.getNama());
+    }
+ 
+    public void DaftarBarangTersedia() {
+        if (daftarBarang.isEmpty()) {
+            System.out.println("Maaf, Tidak ada barang tersebut");
+        } else {
+            System.out.println("Berikut Produk yang tersedia:");
+            for (int i = 0; i < daftarBarang.size(); i++) {
+                Barang barang = daftarBarang.get(i);
+                System.out.println((i + 1) + ". " + barang.getNama() + "    Rp. " + barang.getHarga());
+            }
+        }
+    }
+ 
+    public void transaksi() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("berapa barang yang ingin anda beli: ");
+        int jumlah = scanner.nextInt();
+        scanner.nextLine();
+ 
+        for (int a = 0; a < jumlah; a++) {
+            System.out.print(" nomor barang yang ingin anda beli: ");
+            int nomer = scanner.nextInt();
+            scanner.nextLine();
+ 
+            if (nomer >= 1 && nomer <= daftarBarang.size()) {
+                Barang barang = daftarBarang.get(nomer - 1);
+                ArrayUntukMetod.add(barang);
+ 
+            } else {
+                System.out.println("Maaf barang dengan nomor itu tidak ada");
+            }
+        }
+ 
+        System.out.println("Barang Anda beli : ");
+        int total = 0;
+        for (Barang barang : ArrayUntukMetod) {
+            System.out.println(barang.getNama() + "     Rp." + barang.getHarga());
+            total += barang.getHarga();
+        }
+        System.out.println("Harga total : " + total);
+    }
+}
+ 
+public class TokoMusik {
+    public static void main(String[] args) {
+        Pembelian pembelian = new Pembelian();
+        Scanner scanner = new Scanner(System.in);
+ 
+        Barang gitar = new Barang("Gitar", 120000);
+        Barang ukulele = new Barang("Ukulele", 95000);
+        Barang drum = new Barang("Drum", 12000000);
+ 
+        pembelian.menambahkanBarang(gitar);
+        pembelian.menambahkanBarang(ukulele);
+        pembelian.menambahkanBarang(drum);
+ 
+        boolean proses = true;
+ 
+        while (proses) {
+            System.out.println("====== Program Transaksi =====");
+            System.out.println("==============================");
+            System.out.println("|| 1. Daftar Alat musik     ||");
+            System.out.println("|| 2. Transaksi             ||");
+            System.out.println("|| 3. Keluar                ||");
+            System.out.println("==============================");
+            System.out.print("Silahkan pilih : ");
+            int opsi = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("==============================");
+ 
+            if (opsi == 1) {
+                pembelian.DaftarBarangTersedia();
+            } else if (opsi == 2) {
+                pembelian.transaksi();
+            } else if (opsi == 3) {
+                proses = false;
+            } else {
+                System.out.println("Opsi tidak ada");
+            }
+ 
+        }
+ 
+        System.out.println("Program telah dijalankan");
+    }
+}
